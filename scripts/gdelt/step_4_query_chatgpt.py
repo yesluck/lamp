@@ -64,13 +64,13 @@ class EventQuery:
             'role': 'user',
             'content': msg
         }]
-        completions = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
+        completions = openai.chat.completions.create(
+            model="gpt-4-0125-preview",
             messages=msg_list,
             stream=False
         )
-        print('Usage:', completions['usage']['total_tokens'])
-        body = completions['choices'][0]['message']['content']
+        print('Usage:', completions.usage.total_tokens)
+        body = completions.choices[0].message.content
         return body
         # for i, choice in enumerate(completions['choices']):
         #     print('---------------- choice', i)
@@ -94,6 +94,10 @@ def gpt_generate_causal_events(
             if existed_dict is not None and str(rel_or_obj) in existed_dict:
                 return
             ret_body = gpt.query(msg_head + text)
+            print("(idx, rel_or_obj): ", idx, rel_or_obj)
+            print(msg_head + text)
+            print(ret_body)
+            print("\n\n\n\n\n")
             with DDB.at(db_base_name, inference_type).session() as (sess, obj):
                 if str(idx) in obj:
                     obj[str(idx)][str(rel_or_obj)] = ret_body
@@ -102,7 +106,6 @@ def gpt_generate_causal_events(
                         str(rel_or_obj): ret_body
                     }
                 sess.write()
-                print(idx, rel_or_obj)
         except Exception as e:
             print('Error of', str(e))
 
@@ -142,10 +145,13 @@ def gpt_generate_comb_causal_events(
             if existed_dict is not None:
                 return
             ret_body = gpt.query(msg_head + text)
+            print("(idx, rel_obj): ", idx, rel_obj)
+            print(msg_head + text)
+            print(ret_body)
+            print("\n\n\n\n\n")
             with DDB.at(db_base_name, str(idx)).session() as (sess, ddb):
                 ddb[str(rel_obj)] = ret_body
                 sess.write()
-                print(idx, rel_obj)
         except Exception as e:
             print('Error of', str(e))
 

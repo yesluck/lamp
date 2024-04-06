@@ -1,7 +1,7 @@
 data:
   type: tpp
   data_name: amazon
-  data_dir:  data/amazon/amazon_v0327.pkl
+  data_dir:  data/gdelt/amazon.pkl
   num_event_types: 24
   train_end_date: 2015-06-01
   valid_end_date: 2016-01-01

@@ -543,7 +543,7 @@ def make_samples_for_energy_function(
 
         # just retrieve and add the label event
         topk_causal_dict = {}
-        for pred in set(pred_tuple[pred_type].tolist() + topk_pred.tolist()):
+        for pred in set(pred_tuple[pred_type].tolist() + topk_pred.tolist()[0]):
             if str(pred) not in gpt_db_dict[str_idx]:
                 print(f'-Miss {str_idx}-{pred} in gpt_db')
                 continue

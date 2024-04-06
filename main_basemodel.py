@@ -1,3 +1,4 @@
+import torch
 import yaml
 
 from models.ke_anhp import KnowEvolveANHP
@@ -11,7 +12,8 @@ from utils.general import file_uri_writer_processor, setup_seed
 # device = 'cuda:0'
 from utils.torch_utils import count_torch_model_params
 
-device = 'cpu'
+# device = 'cpu'
+device = "cuda" if torch.cuda.is_available() else "cpu"
 
 
 def build_data_factory_and_runner_from_config_file(config_name):

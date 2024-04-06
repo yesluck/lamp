@@ -1,6 +1,6 @@
 
 from utils.general import file_uri_reader_processor, ProcessPool
-from utils.misc import make_comb_samples_for_energy_function
+from utils.misc import make_samples_for_energy_function
 
 if __name__ == '__main__':
 
